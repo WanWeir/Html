@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <style type="text/css">
+    p {
+        color: red;
+    }
+
+    button {
+        height: 50px;
+        width: 300px;
+    }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+    <meta http-equiv="expires" CONTENT="0">
+    <meta name="author" content="emui">
+    <meta name="description" content="RestfulDemo">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" name="viewport" id="viewport">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>SignIn Demo</title>
+    <script type="text/javascript" src="./public/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="./public/framework.min.js"></script>
+    <script type="text/javascript" src="./public/public_router.js"></script>
+    <script type="text/javascript" src="http://appdl.hicloud.com/dl/appdl/hms/jssdk/hmssdk1.0.2.js"></script>
+    <script type="text/javascript">
+    window.onload = function() {
+        //
+        if (hbs.isSupport()) {
+            hbs.config({
+                appId: "100406347", //必填，华为开发者联盟上申请的Web轻应用的appId
+                jsApiList: ["signIn"] //必填，申请使用的接口列表，此处可固定填为 "singnIn"
+            });
+        }
+        hbs.ready(function() {
+            //config成功的回调处理。
+            alert("config success");
+        });
+
+        hbs.error(function(res) {
+            alert("config error:" + res.code);
+            //config失败会调用error,失败原因在参数res中。可通过res.code 获取失败错误码， res.message 获取失败描述（注：并非所有错误都返回message，message为错误码相关的描述，不适合直接呈现给用户）。
+        });
+
+        $("#bt_getAt").click(function() {
+            //获取AT和OpenId的时候，不用加needAuthCode字段
+            var param = { "scope": "https://www.huawei.com/auth/account/base.profile" };
+            login(param);
+        });
+        $("#bt_getCode").click(function() {
+            //获取AuthCode的时候，需指定needAuthCode字段为true
+            var param = { "scope": "https://www.huawei.com/auth/account/base.profile", "needAuthCode": true };
+            login(param);
+        });
+
+    }
+
+    function login(param) {
+        hbs.signIn(param, function(res) {
+            $("#conn").text("");
+            for (x in res) {
+                //将结果逐条显示出来
+                var h = $("<h3></h3>").text(x);
+                var p = $("<p></p>").text(res[x]);
+                $("#conn").append(h, p);
+            }
+        }, function(error) {
+            var h = $("<h3></h3>").text("error:" + error.code);
+            $("#conn").append(h);
+        })
+    }
+    </script>
+</head>
+
+<body style="word-wrap:break-word; font-family:Arial">
+    <button id="bt_getAt">Get AT&OpenID</button><br>
+    <br>
+    <br>
+    <button id="bt_getCode">Get Authorization Code</button>
+    <br>
+    <div id="conn"></div>
+</body>
+
+</html>

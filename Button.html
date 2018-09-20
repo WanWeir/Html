@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="./public/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+    window.onload = function() {
+        alert(2);
+        $("#bt").click(function() {
+
+
+
+
+            var obj = { "grant_type": "authorization_code", "code": "4156", "client_id": "100406347", "client_secret": "21212932416ab46cebe9f9f09f87642f", "redirect_uri": "hms://redirect_url" };
+  alert(obj);
+            obj["code"] = "9999";
+
+            alert(1);
+            for (x in obj) {
+                var h = $("<h3></h3>").text(x);
+                var p = $("<p></p>").text(obj[x]);
+                $("#body").append(h, p);
+            }
+        });
+    };
+    </script>
+</head>
+
+<body id="body">
+    <button id="bt"> Test</button>
+</body>
+
+</html>

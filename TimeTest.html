@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TimeTest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+    <meta http-equiv="expires" CONTENT="0">
+    <meta name="author" content="emui">
+    <meta name="description" content="RestfulDemo">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" name="viewport" id="viewport">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>TimeTest</title>
+    <script type="text/javascript" src="./public/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="./public/framework.min.js"></script>
+    <script type="text/javascript" src="./public/public_router.js"></script>
+    <style type="text/css">
+    div {
+        color: red;
+        margin-left: 20px;
+    }
+
+    button {
+        margin: 10px;
+        font-size: 20px;
+        height: 50px;
+        width: 300px;
+    }
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var time;
+    var url_get = "/demo/getData";
+    var url_post = "/demo/setData";
+    var url_get_system = "/api/shp/rooms";
+    var div;
+    // //测试数据，用于post请求下发、此处的数据格式必须与java中定义的DeviceData类的json格式完全一致.
+    var postdata = { "ipAddress": "192.168.3.100", "macAddress": "12:34:56:78:9A:BC", "friendName": "TestDeviceData" };
+    // //将对象转为字符串
+    var submitData = JSON.stringify(postdata);
+    // //recogniseDevice()方法用来判断是否是IOS设备，即给isIOS变量赋值，必须在判断isIOS之前执行。建议在插件H5主页入口执行一次即可
+
+    window.onload = function() {
+        recogniseDevice();
+        // alert(isIOS);
+        // if (isIOS) {
+        //     //IOS端获取请求使用这个接口，第二个参数为执行结果的回调函数名称.
+        //     hilink.getResource(url_get, "success_get");
+        // } else {
+        //     //Android端获取请求使用这个接口
+        // javascript: hilink.getResource(url_get, "success_get");
+        //     // javascript: ajaxAction.getAjaxData(url_get_system, "success_get", "failed");
+        //     // javascript: hilink.setResource(url_post, submitData, "success_post");
+        // };
+    }
+
+    function success_get(data) {
+        // alert(data);
+        var now = new Date().getTime();
+        for (var i = 0; i < time.length; i++) {
+            if (time[i] != null && time[i] > 5000) {
+                time[i] = now - time[i];
+
+                if (i == time.length - 1) {
+                    div.append(("  " + time.toString()));
+                    $("#b1").removeAttr("disabled");
+                    $("#b2").removeAttr("disabled");
+                    $("#b3").removeAttr("disabled");
+                    $("#b4").removeAttr("disabled");
+                    $("#b5").removeAttr("disabled");
+                    $("#b6").removeAttr("disabled");
+                }
+                break;
+            }
+        }
+
+    }
+
+    function http(count, frec, type) {
+        //count:次数
+        //frec：间隔时间
+        //type：get/post
+        time = new Array(count);
+        var c = 0;
+        var myVar = setInterval(function() {
+            if (type == "get") {
+                time[c] = new Date().getTime();
+                // javascript: hilink.getResource(url_get, "success_get");
+                javascript: ajaxAction.getAjaxData(url_get_system, "success_get", "failed");
+            }
+            if (type == "post") {
+                time[c] = new Date().getTime();
+                javascript: hilink.setResource(url_post, submitData, "success_get");
+            }
+            c++;
+            if (c == count) {
+                clearInterval(myVar);
+            }
+        }, frec * 1000);
+    }
+
+
+
+
+
+
+    function fun(id) {
+        div = $("#d" + id);
+        $("#b1").attr("disabled", "");
+        $("#b2").attr("disabled", "");
+        $("#b3").attr("disabled", "");
+        $("#b4").attr("disabled", "");
+        $("#b5").attr("disabled", "");
+        $("#b6").attr("disabled", "");
+        switch (id) {
+            case 1:
+                http(1, 0, "get");
+                break;
+            case 2:
+                http(10, 1, "get");
+                break;
+            case 3:
+                http(10, 0, "get");
+                break;
+            case 4:
+                http(1, 0, "post");
+                break;
+            case 5:
+                http(10, 1, "post");
+                break;
+            case 6:
+                http(10, 0, "post");
+                break;
+            default:
+                break;
+        }
+    }
+    </script>
+    <button id="b1" onclick="fun(1)">单次调用getSys耗时</button>
+    <div id="d1">
+    </div>
+    <button id="b2" onclick="fun(2)">1秒/次，调用getSys十次的耗时</button>
+    <div id="d2"> </div>
+    <button id="b3" onclick="fun(3)">密集调用getSys十次的耗时</button>
+    <div id="d3"> </div>
+    <button id="b4" onclick="fun(4)">单次调用post耗时</button>
+    <div id="d4"> </div>
+    <button id="b5" onclick="fun(5)">1秒/次，调用post十次的耗时</button>
+    <div id="d5"> </div>
+    <button id="b6" onclick="fun(6)">密集调用post十次的耗时</button>
+    <div id="d6"> </div>
+</body>
+
+</html>

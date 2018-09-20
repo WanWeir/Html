@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <style type="text/css">
+            p,textarea{
+                color: red;
+            }
+            button{
+                height: 50px;
+                width:300px;
+            }
+
+        </style>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+        <meta http-equiv="expires" CONTENT="0">
+        <meta name="author" content="emui">
+        <meta name="description" content="RestfulDemo">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" name="viewport" id="viewport">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <title>Restful Demo</title>
+        <script type="text/javascript" src="./public/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="./public/framework.min.js"></script>
+        <script type="text/javascript" src="./public/public_router.js"></script>
+        <script type="text/javascript">
+            window.onload=function(){
+                var url_get_system = "/api/ntwk/lan_host";
+                var url_get = "/demo/getData";
+                var url_post = "/demo/setData";
+                // //测试数据，用于post请求下发、此处的数据格式必须与java中定义的DeviceData类的json格式完全一致.
+                var postdata = {"ipAddress":"192.168.3.100","macAddress":"12:34:56:78:9A:BC","friendName":"TestDeviceData"};
+                // //将对象转为字符串
+                var submitData = JSON.stringify(postdata);
+                // //recogniseDevice()方法用来判断是否是IOS设备，即给isIOS变量赋值，必须在判断isIOS之前执行。建议在插件H5主页入口执行一次即可
+                recogniseDevice();
+                
+                $("#h2_get").text("Get请求 "+url_get+"得到的返回值为：");
+
+                
+                
+                if (isIOS) {
+                    //IOS端获取请求使用这个接口，第二个参数为执行结果的回调函数名称.
+                    getAjaxData(url_get_system, "success_get","failed");
+                }else{
+                    //Android端获取请求使用这个接口
+                    javascript:ajaxAction.getAjaxData(url_get_system, "success_get","failed");
+                }
+
+                if (isIOS) {
+                    //IOS端获取请求使用这个接口，第二个参数为执行结果的回调函数名称.
+                    hilink.getResource(url_get, "success_get");
+                }else{
+                    //Android端获取请求使用这个接口
+                    javascript:hilink.getResource(url_get, "success_get");
+                }
+
+                $("#bt_test").click(function(){    
+                    if (isIOS) {
+                        //IOS端下发请求使用这个接口，第二个参数为下发的数据，是一个json格式的字符串类型，第三个参数为执行结果的回调函数名称.
+                        hilink.setResource(url_post,submitData, "success_post");
+                    }else{
+                         //Android端下发请求使用这个接口
+                        javascript:hilink.setResource(url_post,submitData, "success_post");
+                    }
+                    $("#h2_post").text("下发数据:"+submitData+"至请求"+url_post+" 得到的返回值为：");
+                });
+            }
+            
+            function success_get(result){
+                // alert(typeof(result));
+                // alert(result.FristIP);
+                var data = JSON.parse(result);
+                // alert(data.FristIP);
+                $("#result_get").text(result);
+            }
+
+            function failed(result){
+                $("#result_get").text(result);
+            }
+            function success_post(result){    
+                $("#result_post").text(result);
+            }
+            
+        </script>
+    </head>
+    <body width=320px style="word-wrap:break-word; font-family:Arial">
+        <h1>Custom Restful</h1>
+        <h2 id = "h2_get"></h2>
+        <p id = "result_get"></p>
+        <h2>Post请求请求下发数据：</h2>
+        <button id = "bt_test">Post请求</button>
+        <h2 id="h2_post"></h2>
+        <p id = "result_post"></p>
+
+
+        <h1>System Restful</h1>
+        <h2 id = "h2_get_system"></h2>
+        <textarea id = "url_system"></textarea>
+        <p id = "result_get_system"></p>
+        <button id = "bt_test_system">Post请求下发数据测试</button>
+        <h2 id="h2_post_system"></h2>
+        <p id = "result_post_system"></p>
+
+
+        <a href="./A.html"><button>123</button></a><br/>
+        <a href="./B.html"><button>456</button></a>
+    </body>
+</html>
