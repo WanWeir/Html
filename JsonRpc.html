@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>JsonRpcDemo</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+    <meta http-equiv="expires" CONTENT="0">
+    <meta name="author" content="emui">
+    <meta name="description" content="RestfulDemo">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" name="viewport" id="viewport">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <script type="text/javascript" src="./public/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="./public/framework.min.js"></script>
+    <script type="text/javascript" src="./public/public_router.js"></script>
+    <script type="text/javascript" src="./public/zx-debug.min.js"></script>
+    <style type="text/css">
+    button {
+        height: 50px;
+        font-size: 16px;
+        width: 30%;
+        /*word-break: break-all;;?*/
+    }
+
+    select {
+        height: 50px;
+        font-size: 20px;
+        width: 64%;
+    }
+
+    p {
+        font-size: 25px;
+        color: red;
+    }
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript">
+    // aria2.tellActive
+    // aria2.tellWaiting
+    // aria2.tellStopped
+    // aria2.getGlobalOption
+    // aria2.getVersion
+    // aria2.getSessionInfo
+    // aria2.getGlobalStat
+    // aria2.getSessionInfo
+    // system.listMethods
+    // system.listNotifications
+    //{"method":"system.listNotifications","id":"111","jsonrpc":"2.0"}
+    var zxDebug = new ZxDebug({
+        position: 'bottom',
+        offset: 150
+    })
+    var url_post = "/aria/transRpc";
+    var methods = new Array("aria2.tellActive", "aria2.tellWaiting", "aria2.tellStopped", "aria2.getGlobalOption", "aria2.getVersion", "aria2.getSessionInfo", "aria2.getGlobalStat", "aria2.getSessionInfo", "system.listMethods", "system.listNotifications");
+
+    var urls = new Array("192.168.3.1", "192.168.4.1", "192.168.1.1", "192.168.0.1", "192.168.2.1", "127.0.0.1","192.168.1.5");
+
+
+    function jsonRpcData(method) {
+        this.method = method;
+        this.id = Math.round(Math.random() * 1000);
+        this.jsonrpc = "2.0";
+        if (method == "aria2.tellWaiting" || method == "aria2.tellStopped") {
+            this.params = new Array("token:wj666", 0, 1000);
+        } else {
+            this.params = new Array("token:wj666");
+        }
+
+    }
+
+    window.onload = function() {
+        for (var i = 0; i < methods.length; i++) {
+            var option = $("<option></option>").text(methods[i]);
+            $("#se").append(option);
+        }
+
+        for (var i = 0; i < urls.length; i++) {
+            var option = $("<option></option>").text("Servers IP:" + urls[i]);
+            $("#url").append(option);
+        }
+
+        $("#model").append($("<option></option>").text("Test Model:Plugin Restful")).append($("<option></option>").text("Test Model:Default Post"));
+        $("#div_url").hide();
+
+    }
+
+    function model() {
+        var index = $("#model").prop("selectedIndex");
+        // zxDebug.log("CHANGE:" + index);
+        if (index == 0) {
+            $("#div_url").hide();
+        } else {
+            $("#div_url").show();
+        }
+    }
+
+    // function url() {
+    //     var ip = urls[$("#url").prop("selectedIndex")];
+    //     zxDebug.log(ip);
+    // }
+
+    function post() {
+        var rpcData = new jsonRpcData($("#se").val().trim());
+        var postData = JSON.stringify(rpcData);
+        zxDebug.log("postData:" + postData);
+        var model = $("#model").prop("selectedIndex");
+        if (model == 0) {
+            url_post = "/aria/transRpc";
+            zxDebug.log("url_post:" + url_post);
+            hilink.setResource(url_post, postData, "success_post");
+        } else {
+            url_post = "http://" + urls[$("#url").prop("selectedIndex")] + ":6800/jsonrpc?tm=" + new Date().getTime();
+            zxDebug.log("url_post:" + url_post);
+            $("#post").attr("disabled", "");
+            $("#post").text("Requesting...");
+            $.post(url_post, postData, function(data) {
+                success_post(JSON.stringify(data));
+            }).error(function() {
+                success_post("request error...");
+            }).complete(function() {
+                $("#post").removeAttr("disabled")
+                $("#post").text("Request");
+            });
+        }
+    }
+
+    function success_post(result) {
+        zxDebug.log("result:" + result);
+        $("#result_post").text(result);
+    }
+    </script>
+    <center>
+        <select id="model" style="width: 95%" onchange="model()"></select><br><br>
+        <div id="div_url">
+            <select id="url" style="width: 95%"></select><br><br></div>
+        <select id="se"></select>
+        <button id="post" onclick="post()">Request</button>
+        <p id="result_post" style="word-break: break-all;">Result Area</p>
+    </center>
+</body>
+
+</html>
