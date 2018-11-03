@@ -1,0 +1,126 @@
+*{
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+	color:#393939;
+}
+body{ background-image:url(../images/bg.jpg);}
+p{ font-size:inherit;}
+a{color:#393939;text-decoration:none;}
+a:hover{color:#FF0000; text-decoration:none;}
+.clear{ clear:both;}
+.box {
+	height: auto;
+	min-height:600px;
+	width: 950px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-left:75px;
+	padding-right:75px;
+	background-image: url(../images/bg1.jpg);
+	background-repeat: repeat-x;
+	background-position: top;
+}
+.head {
+	height: auto;
+	width: 950px;
+}
+.heada {
+	height: 104px;
+	width: 950px;
+}
+.logo {
+	float: left;
+	height: 104px;
+	width: 660px;
+	overflow: hidden;
+}
+.ssz{width:290px; float:right;padding-top:44px; height:60px;}
+.ss {
+	height: 26px;
+	width: 290px;
+	background-color: #7D7D7D;
+}
+.ss1 {
+	background-image: url(../images/search4.gif);
+	float: left;
+	height: 26px;
+	width: 60px;
+	background-repeat: no-repeat;
+	background-position: left;
+	color: #FFFFFF;
+	padding-left: 10px;
+	line-height: 28px;
+}
+.ss2{width:220px; float:right;}
+.ssk{
+	width:140px;
+	float:left;
+	margin-top: 3px;
+	height: 16px;
+	line-height: 16px;
+}
+#menumain{
+   margin:0;
+   white-space:nowrap;
+   overflow:hidden;
+   width:100%;
+   background:url(menubg.gif) 0px 0px repeat-x;
+}
+
+#menumain .menumain{
+   float:left;
+   height:36px;
+   text-align:center;
+   margin:0px;
+   padding:0px 19px 0px 23px;
+   background:url(menu.gif) 0px 0px no-repeat;
+}.menu {
+	background-image: url(../images/menubg.gif);
+	background-repeat: repeat-x;
+	height: 36px;
+	width: 800px;
+	padding-right: 75px;
+	padding-left: 75px;
+}
+.menu ul {
+	list-style-type: none;
+}
+.menu ul li {
+	line-height: 36px;
+	background-image: url(../images/menu.gif);
+	background-repeat: no-repeat;
+	background-position: left;
+	height: 36px;
+	width: 100px;
+	float: left;
+	text-align: center;
+}
+.menu ul li a {
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+.menu ul li a:hover {
+color:#FFCC00;
+}.banner {
+	height: auto;
+	width: 950px;
+}
+.date{ float:right;}
+.bottom {
+	background-image: url(../images/footbg.gif);
+	background-repeat: no-repeat;
+	height: 70px;
+	width: 950px;
+	padding-top: 19px;
+	line-height: 20px;
+	color: #393939;
+	text-align: center;
+}
+#advsheadlb {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+#advsheadlb .advsheadlbpic {
+	BORDER-RIGHT-WIDTH: 0px; WIDTH: 100%; DISPLAY: none; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}

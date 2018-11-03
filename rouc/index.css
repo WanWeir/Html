@@ -1,0 +1,71 @@
+
+.main {
+	height: 190px;
+	width: 920px;
+	background-color: #FFFFFF;
+	padding-top: 25px;
+	padding-right: 15px;
+	padding-bottom: 25px;
+	padding-left: 15px;
+}
+.news {
+	float: left;
+	height: 190px;
+	width: 365px;
+}
+.products {
+	float: right;
+	height: 190px;
+	width: 525px;
+}
+.newstit {
+	background-image: url(../images/newstit.gif);
+	background-repeat: no-repeat;
+	background-position: left;
+	height: 25px;
+	width: 365px;
+}
+.more1 {
+	position: relative;
+	top: 5px;
+	left: 330px;
+	width:33px;height:9px;
+}
+.more2 {
+	position: relative;
+	top: 5px;
+	left: 490px;
+	width:33px;height:9px;
+}
+.newsnr {
+	height: 155px;
+	width: 365px;
+	padding-top: 10px;
+}
+.newsnr ul {
+	list-style-type: none;
+}
+.newsnr ul li {
+	line-height: 31px;
+	height: 31px;
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	width: 350px;
+	padding-left: 15px;
+	background-image: url(../images/arrow1.gif);
+}
+.date {
+	float: right;
+}
+.cp_tit {
+	background-image: url(../images/cptitle.gif);
+	background-repeat: no-repeat;
+	background-position: left;
+	height: 25px;
+	width: 525px;
+}
+.cps {
+	height: 155px;
+	width: 525px;
+	padding-top: 10px;
+}
