@@ -109,7 +109,7 @@ color:#FFCC00;
 }
 .date{ float:right;}
 .bottom {
-	background-image: url(../images/footbg.gif);
+	background-image: url(./footbg.gif);
 	background-repeat: no-repeat;
 	height: 70px;
 	width: 950px;
