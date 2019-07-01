@@ -39,6 +39,10 @@
         hbs.ready(function() {
             //config成功的回调处理。
             alert("config success");
+            alert("222");
+                login({
+                    "scope": "https://www.huawei.com/auth/account/base.profile"
+                });
         });
 
         hbs.error(function(res) {
