@@ -31,7 +31,7 @@
                 var url_get = "/index/checkAccStep";
                 var url_post = "/index/getStoreGameList";
                 // //测试数据，用于post请求下发、此处的数据格式必须与java中定义的DeviceData类的json格式完全一致.
-                var postdata = {"openID1":"1234","sign":"1234","openID2":"1234","time":100};
+                var postdata = {key:"1234"};
                 // //将对象转为字符串
                 var submitData = JSON.stringify(postdata);
                 // //recogniseDevice()方法用来判断是否是IOS设备，即给isIOS变量赋值，必须在判断isIOS之前执行。建议在插件H5主页入口执行一次即可
@@ -77,7 +77,7 @@
         </script>
     </head>
     <body width=320px style="word-wrap:break-word; font-family:Arial">
-        <h1>Custom Restful_1</h1>
+        <h1>Custom Restful_2</h1>
         <h2 id = "h2_get"></h2>
         <p id = "result_get"></p>
         <h2>Post请求请求下发数据：</h2>
