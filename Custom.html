@@ -28,10 +28,10 @@
         <script type="text/javascript">
             window.onload=function(){
                 // var url_get = "/api/ntwk/lan_host";
-                var url_get = "/demo/getData";
-                var url_post = "/demo/setData";
+                var url_get = "/index/checkAccStep";
+                var url_post = "/index/getStoreGameList";
                 // //测试数据，用于post请求下发、此处的数据格式必须与java中定义的DeviceData类的json格式完全一致.
-                var postdata = {"ipAddress":"192.168.3.100","macAddress":"12:34:56:78:9A:BC","friendName":"TestDeviceData"};
+                var postdata = {"openID1":"1234567890FY5MjFANDdmZWM0ZTgxMDUwMzRiaNDFkMzQ1NGNlYWRlMjliaM2NANDBiaODM4YWNkNjQwZGYyNDEyMDRjYWNiaMmNlYTM4YWY3MGJiaMWExYjMwNDRkMDA1ZWVlNDQ4","sign":"e75cb00av314cf95fb197f2b25823fff","openID2":"MDFAMTAwMTcwMzkzQDY3ZjQzZjYxYWI4OGUxN2EwYzA2MDdiaOWFhNWIzNDUzQDMwM2M4MDM0YmRmNjllNjhlZDE4YzU2ZDY3MjI0NGEzOTc5NjNiaNjBjNWNhMWQ1ZDRhMTkxYjZj","time":1570000114};
                 // //将对象转为字符串
                 var submitData = JSON.stringify(postdata);
                 // //recogniseDevice()方法用来判断是否是IOS设备，即给isIOS变量赋值，必须在判断isIOS之前执行。建议在插件H5主页入口执行一次即可
